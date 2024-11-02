@@ -1,14 +1,40 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 )
 
 func main() {
-	listTasks()
+	fmt.Println("Task Tracker CLI")
+	reader := bufio.NewReader(os.Stdin)
+
+	for {
+		fmt.Println("Enter a command:")
+		command, _ := reader.ReadString('\n')
+
+		command = strings.TrimSpace(command)
+
+		switch command {
+		case "add":
+			fmt.Print("Enter task description: ")
+			description, _ := reader.ReadString('\n')
+
+			if err := addTask(description); err != nil {
+				fmt.Println("Error:", err)
+			}
+			fmt.Println("Task added successfully!")
+		case "exit":
+			fmt.Println("Exit Task Tracker CLI, thanks!")
+			os.Exit(0)
+		default:
+			fmt.Println("Unknown command")
+		}
+	}
 }
 
 // Task
