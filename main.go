@@ -54,3 +54,20 @@ func saveTasks(tasks []Task) error {
 	}
 	return os.WriteFile(filePath, bytes, 0644)
 }
+
+func addTask(description string) error {
+	tasks, err := listTasks()
+	if err != nil {
+		return err
+	}
+	id := len(tasks) + 1
+	task := Task{
+		ID:          id,
+		Description: description,
+		Status:      "todo",
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
+	}
+	tasks = append(tasks, task)
+	return saveTasks((tasks))
+}
