@@ -47,3 +47,10 @@ func listTasks() ([]Task, error) {
 	err = json.Unmarshal(bytes, &tasks)
 	return tasks, err
 }
+func saveTasks(tasks []Task) error {
+	bytes, err := json.MarshalIndent(tasks, "", " ")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(filePath, bytes, 0644)
+}
